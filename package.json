@@ -1,0 +1,17 @@
+{
+  "name": "nextalk",
+  "version": "1.0.0",
+  "description": "Real-time messaging app powered by Node.js & Socket.io",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "dependencies": {
+    "bcryptjs": "^2.4.3",
+    "express": "^4.19.2",
+    "socket.io": "^4.7.5"
+  },
+  "engines": {
+    "node": ">=14.0.0"
+  }
+}
