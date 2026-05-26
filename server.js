@@ -4,12 +4,16 @@ const { Server } = require('socket.io');
 const path = require('path');
 const bcrypt = require('bcryptjs');
 const db = require('./database');
+const security = require('./security');
 
 const app = express();
 const server = http.createServer(app);
 const io = new Server(server);
 
 const PORT = process.env.PORT || 3000;
+
+// Apply security FIRST — before any routes
+security.apply(app);
 
 // Serve static files
 app.use(express.static(__dirname));
