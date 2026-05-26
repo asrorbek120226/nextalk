@@ -1,17 +1,10 @@
 /*
  * NexTalk — Mobile Responsive + UX patch
  * ========================================
- * Add this stylesheet AFTER your existing styles:
- *   <link rel="stylesheet" href="/mobile.css">
- * Or paste it at the bottom of your main CSS file.
- *
- * Fixes:
- *  1. Sidebar overlaps content on small screens  → slide-over drawer with backdrop
- *  2. Tap targets too small                      → min 44px touch areas
- *  3. Full responsive layout for ≤768px          → single-column, thumb-friendly
+ * Fix: Updated selectors to match actual HTML structure
  */
 
-/* ── CSS custom properties (override if your app already defines these) ── */
+/* ── CSS custom properties ── */
 :root {
   --mobile-sidebar-width: 80vw;
   --mobile-topbar-height: 56px;
@@ -19,16 +12,13 @@
   --transition-speed: 0.25s;
 }
 
-/* ══════════════════════════════════════════════════════════════════════════
-   GLOBAL MOBILE RESETS
-   ══════════════════════════════════════════════════════════════════════════ */
+/* Global mobile resets */
 *, *::before, *::after {
-  -webkit-tap-highlight-color: transparent; /* remove grey flash on tap */
+  -webkit-tap-highlight-color: transparent;
   box-sizing: border-box;
 }
 
 html {
-  /* Prevent iOS font size bump on orientation change */
   -webkit-text-size-adjust: 100%;
 }
 
@@ -36,74 +26,29 @@ body {
   overflow-x: hidden;
 }
 
-/* Ensure every button / link is finger-friendly */
-button,
-a,
-[role="button"],
-input[type="submit"],
-input[type="button"] {
+button, a, [role="button"], input[type="submit"], input[type="button"] {
   min-height: var(--tap-min);
   min-width: var(--tap-min);
   touch-action: manipulation;
 }
 
-/* Prevent inputs from zooming on iOS (font-size < 16px triggers zoom) */
-input,
-textarea,
-select {
+input, textarea, select {
   font-size: 16px !important;
 }
 
-/* ══════════════════════════════════════════════════════════════════════════
-   LAYOUT — only kicks in on phones / small tablets
-   ══════════════════════════════════════════════════════════════════════════ */
+/* MOBILE LAYOUT — max-width: 768px */
 @media (max-width: 768px) {
 
-  /* ── Root shell ─────────────────────────────────────────────────── */
-  /* Assume your root flex/grid container has class .app, .layout, or is body */
-  .app,
-  .layout,
-  #app,
-  #root {
+  /* Root container */
+  #app {
     display: flex;
     flex-direction: column;
-    height: 100dvh;          /* dynamic viewport height — handles mobile chrome bar */
+    height: 100dvh;
     overflow: hidden;
   }
 
-  /* ── Top bar ────────────────────────────────────────────────────── */
-  .topbar,
-  header,
-  nav.top {
-    position: sticky;
-    top: 0;
-    z-index: 100;
-    height: var(--mobile-topbar-height);
-    display: flex;
-    align-items: center;
-    padding: 0 12px;
-    gap: 10px;
-    flex-shrink: 0;
-  }
-
-  /* Hamburger / menu toggle — show on mobile */
-  .menu-toggle,
-  .hamburger,
-  [data-toggle="sidebar"] {
-    display: flex !important;
-    align-items: center;
-    justify-content: center;
-    width: var(--tap-min);
-    height: var(--tap-min);
-    cursor: pointer;
-    border: none;
-    background: transparent;
-  }
-
-  /* ── Sidebar → slide-over drawer ───────────────────────────────── */
-  .sidebar,
-  .channel-list,
-  aside {
+  /* SIDEBAR — hidden by default, slides in from left */
+  #sidebar {
     position: fixed;
     top: 0;
     left: 0;
@@ -115,23 +60,17 @@ select {
     transition: transform var(--transition-speed) cubic-bezier(.4,0,.2,1);
     overflow-y: auto;
     -webkit-overflow-scrolling: touch;
-    /* Shadow to lift it above content */
     box-shadow: 4px 0 24px rgba(0,0,0,0.35);
   }
 
-  /* Open state — toggled by JS adding .sidebar-open to <body> or sidebar */
-  body.sidebar-open .sidebar,
-  body.sidebar-open .channel-list,
-  body.sidebar-open aside,
-  .sidebar.open,
-  .channel-list.open,
-  aside.open {
+  /* Sidebar open state */
+  body.sidebar-open #sidebar,
+  #sidebar.open {
     transform: translateX(0);
   }
 
-  /* Backdrop */
-  body.sidebar-open::after,
-  .sidebar-backdrop {
+  /* Backdrop when sidebar open */
+  body.sidebar-open::after {
     content: '';
     position: fixed;
     inset: 0;
@@ -142,50 +81,61 @@ select {
 
   @keyframes fadeIn {
     from { opacity: 0; }
-    to   { opacity: 1; }
+    to { opacity: 1; }
   }
 
-  /* ── Main chat area ─────────────────────────────────────────────── */
-  .main,
-  .chat-area,
-  main {
+  /* Main content area */
+  #main {
     flex: 1;
     display: flex;
     flex-direction: column;
     overflow: hidden;
-    /* No left margin — sidebar is now a drawer overlay */
-    margin-left: 0 !important;
-    width: 100% !important;
+    width: 100%;
   }
 
-  /* ── Message list ───────────────────────────────────────────────── */
-  .messages,
-  .message-list,
-  .chat-messages {
+  /* Topbar with hamburger */
+  #topbar {
+    display: flex !important;
+    align-items: center;
+    gap: 12px;
+    padding: 0 12px !important;
+    height: var(--mobile-topbar-height);
+    background: var(--surface);
+    border-bottom: 1px solid var(--border);
+    flex-shrink: 0;
+  }
+
+  /* Hamburger button */
+  .menu-toggle {
+    display: flex !important;
+    align-items: center;
+    justify-content: center;
+    width: var(--tap-min);
+    height: var(--tap-min);
+    cursor: pointer;
+    border: none;
+    background: transparent;
+    color: var(--text);
+    font-size: 20px;
+  }
+
+  /* Chat area */
+  .chat-body {
     flex: 1;
     overflow-y: auto;
-    -webkit-overflow-scrolling: touch;
     padding: 12px;
-    /* Give space for fixed composer at bottom */
     padding-bottom: calc(var(--tap-min) + 24px);
   }
 
-  /* Individual message bubble — full width on mobile */
-  .message,
-  .msg,
-  [class*="message-item"] {
+  /* Message bubbles */
+  .msg-bubble {
     max-width: 88%;
   }
 
-  /* ── Composer / input bar ───────────────────────────────────────── */
-  .composer,
-  .message-input-bar,
-  .chat-input,
-  form.send-form {
-    position: sticky;
-    bottom: 0;
+  /* Input area */
+  .chat-input-area {
     padding: 8px 12px;
-    padding-bottom: max(8px, env(safe-area-inset-bottom)); /* iPhone notch */
+    padding-bottom: max(8px, env(safe-area-inset-bottom));
     display: flex;
     align-items: center;
     gap: 8px;
@@ -193,132 +143,98 @@ select {
     z-index: 50;
   }
 
-  .composer input,
-  .message-input-bar input,
-  .chat-input input,
-  .composer textarea,
-  input[placeholder*="message" i],
-  input[placeholder*="type" i] {
-    flex: 1;
-    border-radius: 22px;
-    padding: 10px 16px;
+  #msgInput {
     font-size: 16px;
   }
 
-  /* Send button */
-  .composer button[type="submit"],
-  .send-btn,
-  .composer .btn-send {
-    border-radius: 50%;
+  .send-btn {
     width: 44px;
     height: 44px;
     flex-shrink: 0;
+  }
+
+  /* Welcome screen */
+  #welcome {
+    flex: 1;
     display: flex;
+    flex-direction: column;
     align-items: center;
     justify-content: center;
-    padding: 0;
-  }
-
-  /* ── Auth screen — centered card ───────────────────────────────── */
-  .auth,
-  .login-container,
-  .signup-container,
-  .auth-card {
     padding: 24px 16px;
-    max-width: 100%;
-    margin: 0 auto;
   }
 
-  .auth input,
-  .login-container input,
-  .signup-container input {
+  /* Auth screen */
+  .auth-card {
+    flex-direction: column;
     width: 100%;
-    padding: 12px 14px;
-    border-radius: 10px;
-    margin-bottom: 12px;
+    min-height: 100vh;
+    border-radius: 0;
+    border: none;
   }
 
-  .auth button,
-  .login-container button,
-  .signup-container button {
+  .auth-visual {
     width: 100%;
-    padding: 14px;
-    border-radius: 10px;
+    height: 180px;
+  }
+
+  .auth-form {
+    padding: 24px 16px;
+  }
+
+  .field input {
     font-size: 16px;
-    font-weight: 600;
   }
 
-  /* ── Settings panel ─────────────────────────────────────────────── */
-  .settings,
+  /* Settings */
   .settings-panel {
-    max-width: 100%;
     padding: 16px;
   }
 
-  .settings-nav,
-  .settings-tabs {
-    display: flex;
+  .settings-panel-body {
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
+
+  .settings-nav {
+    flex-direction: row;
     overflow-x: auto;
     -webkit-overflow-scrolling: touch;
-    gap: 6px;
-    padding-bottom: 8px;
-    scrollbar-width: none;
-  }
-  .settings-nav::-webkit-scrollbar { display: none; }
-
-  .settings-nav button,
-  .settings-nav a,
-  .settings-tabs button {
-    white-space: nowrap;
-    flex-shrink: 0;
-    padding: 10px 16px;
-    border-radius: 20px;
-    font-size: 14px;
   }
 
-  /* ── Modals and sheets ──────────────────────────────────────────── */
-  .modal,
-  .dialog,
-  [role="dialog"] {
-    position: fixed;
-    inset: 0;
-    display: flex;
-    align-items: flex-end;   /* bottom sheet on mobile */
-    z-index: 300;
-  }
-
-  .modal-content,
-  .dialog-content {
-    width: 100%;
-    border-radius: 20px 20px 0 0;
-    padding: 20px 16px;
-    padding-bottom: max(20px, env(safe-area-inset-bottom));
-    max-height: 90vh;
-    overflow-y: auto;
-  }
-
-  /* ── Typography scale-down ──────────────────────────────────────── */
-  h1 { font-size: clamp(1.4rem, 5vw, 2rem); }
-  h2 { font-size: clamp(1.1rem, 4vw, 1.5rem); }
-  h3 { font-size: clamp(1rem, 3.5vw, 1.25rem); }
-
-  /* ── Channel list items ─────────────────────────────────────────── */
-  .channel-item,
-  .room-item,
-  [class*="channel-row"] {
+  /* Channel items */
+  .room-item {
     padding: 12px 16px;
-    font-size: 15px;
     min-height: var(--tap-min);
-    display: flex;
-    align-items: center;
   }
 
-  /* ── Utility: hide desktop-only chrome ─────────────────────────── */
-  .desktop-only { display: none !important; }
-  .mobile-only  { display: flex !important; }
+  /* Utilities */
+  .mobile-only {
+    display: flex !important;
+  }
+
+  .desktop-only {
+    display: none !important;
+  }
 }
 
-/* Show desktop-only things above breakpoint */
+/* Desktop — show sidebar, hide hamburger */
 @media (min-width: 769px) {
-  .mobile-only { display: none !important; }
+  #sidebar {
+    position: static;
+    transform: translateX(0) !important;
+    width: var(--sidebar, 280px);
+    height: 100vh;
+  }
+
+  #topbar {
+    display: none !important;
+  }
+
+  .mobile-only {
+    display: none !important;
+  }
+
+  body.sidebar-open::after {
+    display: none !important;
+  }
 }
