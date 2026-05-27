@@ -98,427 +98,505 @@
   .room-name{font-size:13.5px;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
   .room-preview{font-size:12px;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;margin-top:2px;}
   .room-time{font-size:11px;color:var(--muted);}
-  .sb-user{padding:13px 16px;border-top:1px solid var(--border);display:flex;align-items:center;gap:10px;}
-  .user-avatar{width:34px;height:34px;border-radius:50%;background:linear-gradient(135deg,#2da8ff,#1a4a6b);display:flex;align-items:center;justify-content:center;font-size:15px;flex-shrink:0;}
-  .user-name{flex:1;font-size:13px;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
-  .btn-logout{background:none;border:none;color:var(--muted);cursor:pointer;font-size:16px;padding:4px;border-radius:6px;transition:.2s;}
-  .btn-logout:hover{color:var(--danger);}
+  .sb-footer{padding:12px 16px;display:flex;gap:8px;flex-direction:column;border-top:1px solid var(--border);}
+  .sb-footer-row{display:flex;gap:8px;}
+  .sb-user{flex:1;padding:10px 12px;background:var(--panel);border:1px solid var(--border);border-radius:10px;display:flex;align-items:center;gap:8px;color:var(--text);font-size:12px;font-weight:600;}
+  .sb-user-avatar{width:28px;height:28px;border-radius:50%;background:linear-gradient(135deg,#7c6aff,#2da8ff);flex-shrink:0;}
+  .sb-user-name{flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
+  .sb-user-status{width:8px;height:8px;border-radius:50%;background:var(--online);margin-left:auto;flex-shrink:0;}
 
   /* ── MAIN ── */
-  #main{flex:1;display:flex;flex-direction:column;min-width:0;}
-  .chat-header{padding:13px 20px;background:var(--surface);border-bottom:1px solid var(--border);display:flex;align-items:center;gap:14px;}
-  .ch-avatar{width:38px;height:38px;border-radius:50%;background:linear-gradient(135deg,#1a4a6b,#2da8ff);display:flex;align-items:center;justify-content:center;font-size:17px;}
-  .ch-name{font-size:15px;font-weight:700;}
-  .ch-status{font-size:12px;color:var(--online);margin-top:1px;}
+  #main{flex:1;display:flex;flex-direction:column;background:var(--bg);}
+  .msg-header{padding:16px 24px;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;background:var(--panel);}
+  .msg-header h3{font-size:17px;font-weight:700;}
+  .msg-header .room-info{display:flex;align-items:center;gap:12px;}
+  .msg-header-avatar{width:44px;height:44px;border-radius:50%;background:linear-gradient(135deg,#1a4a6b,#2da8ff);display:flex;align-items:center;justify-content:center;font-size:22px;flex-shrink:0;}
+  .msg-list{flex:1;overflow-y:auto;padding:20px 24px;display:flex;flex-direction:column;gap:12px;}
+  .msg{display:flex;gap:12px;margin-bottom:8px;}
+  .msg.own{justify-content:flex-end;}
+  .msg-avatar{width:36px;height:36px;border-radius:50%;background:linear-gradient(135deg,#1a4a6b,#2da8ff);display:flex;align-items:center;justify-content:center;font-size:16px;flex-shrink:0;}
+  .msg.own .msg-avatar{display:none;}
+  .msg-bubble{max-width:420px;padding:12px 16px;border-radius:14px;font-size:13.5px;word-wrap:break-word;}
+  .msg.recv .msg-bubble{background:var(--recv-bg);color:var(--text);}
+  .msg.own .msg-bubble{background:var(--sent-bg);color:#fff;}
+  .msg-time{font-size:11px;color:var(--muted);margin-top:4px;}
+  .msg-footer{padding:16px 24px;border-top:1px solid var(--border);display:flex;gap:10px;background:var(--panel);}
+  .msg-input-wrapper{flex:1;display:flex;border:1px solid var(--border);border-radius:10px;background:var(--bg);}
+  .msg-input{flex:1;padding:11px 14px;background:transparent;border:none;color:var(--text);font-size:13.5px;outline:none;font-family:inherit;}
+  .msg-input::placeholder{color:var(--muted);}
+  .msg-btn{padding:11px 14px;background:none;border:none;color:var(--accent);cursor:pointer;font-size:16px;transition:.2s;}
+  .msg-btn:hover{color:var(--accent2);}
 
-  .chat-body{flex:1;overflow-y:auto;padding:18px 20px;display:flex;flex-direction:column;gap:3px;background:var(--bg);}
-  .chat-body::-webkit-scrollbar{width:4px;}
-  .chat-body::-webkit-scrollbar-thumb{background:var(--border);border-radius:4px;}
+  /* ── SETTINGS MODAL ── */
+  .modal{position:fixed;inset:0;z-index:200;display:none;align-items:center;justify-content:center;background:rgba(0,0,0,.6);}
+  .modal.open{display:flex;}
+  .modal-content{background:var(--surface);border-radius:18px;border:1px solid var(--border);max-width:540px;width:90vw;max-height:85vh;overflow-y:auto;box-shadow:0 24px 80px rgba(0,0,0,.8);}
+  .modal-header{padding:24px;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;}
+  .modal-header h2{font-size:18px;font-weight:700;}
+  .modal-close{width:36px;height:36px;border:none;background:var(--panel);border-radius:8px;color:var(--text);font-size:18px;cursor:pointer;transition:.2s;}
+  .modal-close:hover{background:var(--border);}
+  .modal-body{padding:24px;}
+  .setting-section{margin-bottom:24px;}
+  .setting-section h4{font-size:13px;font-weight:700;color:var(--muted);margin-bottom:12px;letter-spacing:.6px;text-transform:uppercase;}
+  .toggle{position:relative;width:42px;height:24px;border:1px solid var(--border);border-radius:12px;background:var(--panel);cursor:pointer;transition:.2s;}
+  .toggle.on{background:var(--accent);}
+  .toggle::after{content:'';position:absolute;width:18px;height:18px;border-radius:50%;background:#fff;top:3px;left:3px;transition:.2s;box-shadow:0 1px 4px rgba(0,0,0,.2);}
+  .toggle.on::after{transform:translateX(20px);}
+  .lang-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;}
+  .lang-pill{padding:12px 14px;border-radius:14px;border:1px solid var(--border);background:var(--panel);color:var(--text);cursor:pointer;display:flex;align-items:center;justify-content:center;}
+  .lang-pill:hover{border-color:var(--accent);}
+  .lang-pill.selected{background:var(--accent-glow);color:var(--accent);border-color:var(--accent);}
+  .theme-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px;}
+  .theme-swatch{position:relative;height:76px;border-radius:18px;overflow:hidden;cursor:pointer;transition:.2s;border:2px solid transparent;}
+  .theme-swatch.selected{border-color:var(--accent);}
+  .theme-swatch:hover{transform:scale(1.02);}
+  .theme-swatch .check{position:absolute;top:10px;right:10px;width:18px;height:18px;border-radius:50%;background:var(--accent);display:none;align-items:center;justify-content:center;color:#fff;font-size:10px;}
+  .theme-swatch.selected .check{display:flex;}
+  .theme-label{position:absolute;bottom:10px;left:12px;font-size:11px;font-weight:700;color:rgba(255,255,255,.9);}
+  .privacy-card,.danger-card{padding:16px;background:var(--panel);border:1px solid var(--border);border-radius:18px;display:flex;align-items:center;justify-content:space-between;gap:14px;margin-bottom:12px;}
+  .privacy-icon{width:38px;height:38px;border-radius:14px;background:rgba(45,168,255,.12);display:flex;align-items:center;justify-content:center;font-size:16px;}
+  .privacy-text h5{font-size:14px;margin-bottom:4px;}
+  .privacy-text p{font-size:12px;color:var(--muted);}
+  .danger-card{background:rgba(248,81,73,.08);border-color:rgba(248,81,73,.18);}
+  .toast{position:fixed;bottom:24px;right:24px;background:var(--panel);border:1px solid var(--border);border-radius:16px;padding:14px 18px;display:flex;align-items:center;gap:10px;color:var(--text);box-shadow:0 16px 48px rgba(0,0,0,.35);transform:translateY(20px);opacity:0;transition:.25s;z-index:1000;}
+  .toast.show{transform:translateY(0);opacity:1;}
+  .toast .dot{width:8px;height:8px;border-radius:50%;background:var(--accent);}
 
-  .msg-group{display:flex;flex-direction:column;margin-bottom:6px;}
-  .msg-group.sent{align-items:flex-end;}
-  .msg-group.recv{align-items:flex-start;}
-  .msg-sender{font-size:11px;font-weight:700;color:var(--accent);margin-bottom:3px;padding:0 4px;}
-  .msg-bubble{max-width:62%;padding:10px 14px 7px;border-radius:16px;font-size:14px;line-height:1.5;word-break:break-word;animation:popIn .16s ease;}
-  .msg-group.sent .msg-bubble{background:var(--sent-bg);border-bottom-right-radius:3px;}
-  .msg-group.recv .msg-bubble{background:var(--recv-bg);border-bottom-left-radius:3px;}
-  .msg-foot{display:flex;align-items:center;gap:4px;margin-top:3px;justify-content:flex-end;}
-  .msg-time{font-size:10px;color:rgba(255,255,255,.3);}
-  .msg-check{font-size:11px;color:var(--accent);}
-  @keyframes popIn{from{opacity:0;transform:scale(.95) translateY(6px)}to{opacity:1;transform:none}}
+  #welcome{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;color:var(--muted);gap:12px;}
+  #welcome .big{font-size:60px;}
+  #welcome h3{font-size:20px;font-weight:700;color:var(--text);}
 
-  .date-divider{text-align:center;margin:14px 0;font-size:11px;color:var(--muted);position:relative;}
-  .date-divider::before,.date-divider::after{content:'';position:absolute;top:50%;width:38%;height:1px;background:var(--border);}
-  .date-divider::before{left:0;}.date-divider::after{right:0;}
-
-  .typing-indicator{font-size:12px;color:var(--muted);padding:4px 8px;font-style:italic;}
-
-  /* ── INPUT ── */
-  .chat-input-wrap{position:relative;}
-  .emoji-picker{position:absolute;bottom:70px;left:14px;background:var(--surface);border:1px solid var(--border);border-radius:16px;padding:12px;display:none;flex-wrap:wrap;gap:3px;width:270px;box-shadow:0 8px 32px rgba(0,0,0,.5);z-index:50;}
-  .emoji-picker.open{display:flex;}
-  .emoji-picker span{font-size:21px;cursor:pointer;padding:4px;border-radius:6px;transition:.12s;}
-  .emoji-picker span:hover{background:var(--panel);}
-  .chat-input-area{padding:12px 16px;background:var(--surface);border-top:1px solid var(--border);display:flex;align-items:center;gap:10px;}
-  .emoji-btn{font-size:21px;cursor:pointer;padding:6px;border:none;background:none;border-radius:8px;transition:.2s;}
-  .emoji-btn:hover{background:var(--panel);}
-  #msgInput{flex:1;padding:11px 16px;background:var(--panel);border:1px solid var(--border);border-radius:20px;color:var(--text);font-size:14px;outline:none;transition:.2s;font-family:inherit;resize:none;max-height:110px;}
-  #msgInput:focus{border-color:var(--accent);}
-  #msgInput::placeholder{color:var(--muted);}
-  .send-btn{width:42px;height:42px;border-radius:50%;background:var(--accent);border:none;color:#fff;font-size:17px;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:.2s;flex-shrink:0;}
-  .send-btn:hover{background:var(--accent2);transform:scale(1.06);}
+  /* connection status */
+  .conn-dot{width:8px;height:8px;border-radius:50%;background:var(--online);display:inline-block;margin-right:6px;}
+  .conn-dot.off{background:var(--danger);}
 </style>
 </head>
 <body>
-<!-- Will be filled by JavaScript -->
-<script>
-const socket = io();
-let myName = '';
-let currentRoom = null;
-let allRooms = [];
-let typingTimer;
 
-function doLogin() {
-  const email = document.getElementById('login-email').value;
-  const pass = document.getElementById('login-pass').value;
-  const err = document.getElementById('auth-err');
-  err.style.display = 'none';
-
-  if (!email || !pass) {
-    err.textContent = 'Please enter email and password!';
-    err.style.display = 'block';
-    return;
-  }
-
-  socket.emit('login', { email, password: pass });
-}
-
-function doRegister() {
-  const name = document.getElementById('reg-name').value;
-  const email = document.getElementById('reg-email').value;
-  const pass = document.getElementById('reg-pass').value;
-  const err = document.getElementById('auth-err');
-  err.style.display = 'none';
-
-  if (!name || !email || !pass) {
-    err.textContent = 'Please fill in all fields!';
-    err.style.display = 'block';
-    return;
-  }
-
-  if (pass.length < 6) {
-    err.textContent = 'Password must be at least 6 characters!';
-    err.style.display = 'block';
-    return;
-  }
-
-  socket.emit('register', { name, email, password: pass });
-}
-
-socket.on('login-success', ({ name, email }) => {
-  enterApp(name);
-});
-
-socket.on('register-success', ({ name, email }) => {
-  enterApp(name);
-});
-
-socket.on('auth-error', (msg) => {
-  const err = document.getElementById('auth-err');
-  err.textContent = msg;
-  err.style.display = 'block';
-});
-
-function enterApp(name) {
-  myName = name;
-  document.getElementById('auth-screen').style.display = 'none';
-  document.getElementById('app').style.display = 'flex';
-  document.getElementById('sb-name').textContent = name;
-  document.getElementById('sb-avatar').textContent = avatarEmoji(name);
-}
-
-function leaveApp() {
-  location.reload();
-}
-
-socket.on('room-list', (rooms) => {
-  allRooms = rooms;
-  renderRooms(rooms);
-});
-
-socket.on('new-room', (room) => {
-  allRooms.push(room);
-  renderRooms(allRooms);
-});
-
-function renderRooms(rooms) {
-  const list = document.getElementById('room-list');
-  list.innerHTML = '';
-  rooms.forEach(r => {
-    const el = document.createElement('div');
-    el.className = 'room-item' + (r.id === currentRoom ? ' active' : '');
-    const lastText = r.lastMsg ? r.lastMsg.name.split(' ')[0] + ': ' + r.lastMsg.text : 'Tap to open';
-    const lastTime = r.lastMsg ? fmtTime(r.lastMsg.time) : '';
-    el.innerHTML = `
-      <div class="room-avatar">${r.emoji}</div>
-      <div class="room-info">
-        <div class="room-name">${r.name}</div>
-        <div class="room-preview">${escHtml(lastText)}</div>
-      </div>
-      <div class="room-time">${lastTime}</div>
-    `;
-    el.onclick = () => openRoom(r);
-    list.appendChild(el);
-  });
-}
-
-function filterRooms() {
-  const q = document.getElementById('room-search').value.toLowerCase();
-  renderRooms(allRooms.filter(r => r.name.toLowerCase().includes(q)));
-}
-
-function openRoom(room) {
-  currentRoom = room.id;
-  document.querySelectorAll('.room-item').forEach(el => el.classList.remove('active'));
-  event.currentTarget.classList.add('active');
-  document.getElementById('chat-body').innerHTML = '<div style="text-align:center;color:var(--muted);">Loading...</div>';
-  socket.emit('join-room', { roomId: room.id, userName: myName });
-  document.getElementById('chat-header').style.display = 'flex';
-  document.getElementById('ch-avatar').textContent = room.emoji;
-  document.getElementById('ch-name').textContent = room.name;
-}
-
-socket.on('history', (messages) => {
-  const body = document.getElementById('chat-body');
-  body.innerHTML = '';
-  let lastDate = null;
-  messages.forEach(msg => {
-    const msgDate = fmtDate(msg.time);
-    if (msgDate !== lastDate) {
-      const divider = document.createElement('div');
-      divider.className = 'date-divider';
-      divider.textContent = msgDate;
-      body.appendChild(divider);
-      lastDate = msgDate;
-    }
-    const group = document.createElement('div');
-    group.className = 'msg-group ' + (msg.name === myName ? 'sent' : 'recv');
-    group.innerHTML = `<div class="msg-sender">${escHtml(msg.name)}</div><div class="msg-bubble">${escHtml(msg.text)}</div><div class="msg-foot"><div class="msg-time">${fmtTime(msg.time)}</div></div>`;
-    body.appendChild(group);
-  });
-  body.scrollTop = body.scrollHeight;
-});
-
-socket.on('message', (msg) => {
-  if (msg.room !== currentRoom) return;
-  const body = document.getElementById('chat-body');
-  const group = document.createElement('div');
-  group.className = 'msg-group ' + (msg.name === myName ? 'sent' : 'recv');
-  group.innerHTML = `<div class="msg-sender">${escHtml(msg.name)}</div><div class="msg-bubble">${escHtml(msg.text)}</div><div class="msg-foot"><div class="msg-time">${fmtTime(msg.time)}</div></div>`;
-  body.appendChild(group);
-  body.scrollTop = body.scrollHeight;
-  renderRooms(allRooms);
-});
-
-function sendMsg() {
-  const input = document.getElementById('msgInput');
-  const text = input.value;
-  if (!text || !currentRoom) return;
-  socket.emit('message', { text });
-  input.value = '';
-  input.style.height = 'auto';
-}
-
-function onTyping() {
-  socket.emit('typing', true);
-  clearTimeout(typingTimer);
-  typingTimer = setTimeout(() => socket.emit('typing', false), 1500);
-}
-
-socket.on('typing', ({name, isTyping}) => {
-  const el = document.getElementById('typing-line');
-  if (!el) return;
-  el.textContent = isTyping ? name + ' is typing…' : '';
-});
-
-socket.on('online-count', (n) => {
-  const el = document.getElementById('online-count');
-  if (el) el.textContent = n + ' online';
-});
-
-socket.on('user-joined', ({name}) => {
-  const body = document.getElementById('chat-body');
-  const d = document.createElement('div');
-  d.style.cssText = 'text-align:center;font-size:12px;color:var(--online);margin:6px 0;';
-  d.textContent = name + ' joined the channel';
-  body.appendChild(d);
-  body.scrollTop = body.scrollHeight;
-});
-
-socket.on('user-left', ({name}) => {
-  const body = document.getElementById('chat-body');
-  const d = document.createElement('div');
-  d.style.cssText = 'text-align:center;font-size:12px;color:var(--muted);margin:6px 0;';
-  d.textContent = name + ' left the channel';
-  body.appendChild(d);
-  body.scrollTop = body.scrollHeight;
-});
-
-socket.on('connect', () => console.log('Connected'));
-socket.on('disconnect', () => console.log('Disconnected'));
-
-function switchTab(tab) {
-  ['login', 'register'].forEach(t => {
-    document.getElementById('tab-' + t).style.display = t === tab ? 'block' : 'none';
-    document.getElementById('btn-tab-' + t).classList.toggle('active', t === tab);
-  });
-  document.getElementById('auth-err').style.display = 'none';
-}
-
-function createRoom() {
-  const name = prompt('Channel name:');
-  if (name) socket.emit('create-room', { name });
-}
-
-function avatarEmoji(name='') {
-  const list = ['😀','😎','🤩','🥳','🧑','👩','👨','🦸','🧙','🤖'];
-  let h = 0; for (let c of name) h = (h * 31 + c.charCodeAt(0)) & 0xff;
-  return list[h % list.length];
-}
-
-function escHtml(s) {
-  return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
-}
-
-function fmtTime(ts) {
-  if (!ts) return '';
-  return new Date(ts).toLocaleTimeString([], { hour:'2-digit', minute:'2-digit' });
-}
-
-function fmtDate(ts) {
-  if (!ts) return '';
-  const d = new Date(ts), now = new Date();
-  if (d.toDateString() === now.toDateString()) return 'Today';
-  const y = new Date(now); y.setDate(now.getDate()-1);
-  if (d.toDateString() === y.toDateString()) return 'Yesterday';
-  return d.toLocaleDateString([], { month:'long', day:'numeric' });
-}
-
-window.addEventListener('load', () => {
-  const authScreen = `
-    <div id="auth-screen" style="position:fixed;inset:0;z-index:100;display:flex;align-items:center;justify-content:center;background:var(--bg);">
-      <div class="auth-card">
-        <div class="auth-visual">
-          <div class="bubble b1"></div><div class="bubble b2"></div><div class="bubble b3"></div>
-          <div class="av-content">
-            <div class="logo">💬</div>
-            <h1>NexTalk</h1>
-            <p>Real-time messaging powered by Node.js & Socket.io</p>
-          </div>
-        </div>
-        <div class="auth-form">
-          <h2>Welcome Back 👋</h2>
-          <p class="sub">Sign in or create an account to start chatting</p>
-          <div class="auth-tabs">
-            <button class="auth-tab active" id="btn-tab-login" onclick="switchTab('login')">Login</button>
-            <button class="auth-tab" id="btn-tab-register" onclick="switchTab('register')">Sign Up</button>
-          </div>
-          <div id="tab-login">
-            <div class="field">
-              <label>Email</label>
-              <input type="email" id="login-email" placeholder="you@example.com" onkeydown="if(event.key==='Enter')doLogin()">
-            </div>
-            <div class="field">
-              <label>Password</label>
-              <input type="password" id="login-pass" placeholder="••••••••" onkeydown="if(event.key==='Enter')doLogin()">
-            </div>
-            <button class="btn-primary" onclick="doLogin()">Sign In →</button>
-          </div>
-          <div id="tab-register" style="display:none;">
-            <div class="field">
-              <label>Display Name</label>
-              <input type="text" id="reg-name" placeholder="Your name" maxlength="30" onkeydown="if(event.key==='Enter')doRegister()">
-            </div>
-            <div class="field">
-              <label>Email</label>
-              <input type="email" id="reg-email" placeholder="you@example.com" onkeydown="if(event.key==='Enter')doRegister()">
-            </div>
-            <div class="field">
-              <label>Password</label>
-              <input type="password" id="reg-pass" placeholder="Min 6 chars" onkeydown="if(event.key==='Enter')doRegister()">
-            </div>
-            <button class="btn-primary" onclick="doRegister()">Create →</button>
-          </div>
-          <div class="auth-error" id="auth-err"></div>
-        </div>
+<!-- ══ LOGIN / SIGNUP ══ -->
+<div id="auth-screen">
+  <div class="auth-card">
+    <div class="auth-visual">
+      <div class="bubble b1"></div><div class="bubble b2"></div><div class="bubble b3"></div>
+      <div class="av-content">
+        <div class="logo">💬</div>
+        <h1>NexTalk Messenger</h1>
+        <p>Real-time chat powered by Node.js & Socket.io</p>
       </div>
     </div>
-  `;
-  const appScreen = `
-    <div id="app" style="display:none;height:100vh;flex-direction:row;">
-      <div id="sidebar">
-        <div class="sb-header">
-          <div class="sb-logo">💬 NexTalk</div>
-          <button class="btn-icon" title="New channel" onclick="createRoom()">✏️</button>
+    <div class="auth-form">
+      <h2>Welcome Back 👋</h2>
+      <p class="sub">Sign in or create an account to start chatting</p>
+      
+      <div class="auth-tabs">
+        <button class="auth-tab active" id="btn-tab-login" onclick="switchTab('login')">Login</button>
+        <button class="auth-tab" id="btn-tab-register" onclick="switchTab('register')">Sign Up</button>
+      </div>
+
+      <!-- Login Tab Content -->
+      <div id="tab-login">
+        <div class="field">
+          <label>Email Address</label>
+          <input type="email" id="login-email" placeholder="you@example.com" onkeydown="if(event.key==='Enter')doLogin()">
         </div>
-        <div class="sb-search"><input id="room-search" placeholder="🔍 Search…" oninput="filterRooms()"></div>
-        <div class="rooms-label">CHANNELS</div>
-        <div class="room-list" id="room-list"></div>
+        <div class="field">
+          <label>Password</label>
+          <input type="password" id="login-pass" placeholder="••••••••" onkeydown="if(event.key==='Enter')doLogin()">
+        </div>
+        <a href="/forgot-password.html" style="font-size:13px;color:var(--accent);text-decoration:none;margin-bottom:14px;display:block;text-align:right;">Forgot password?</a>
+        <button class="btn-primary" onclick="doLogin()">Sign In →</button>
+      </div>
+
+      <!-- Register Tab Content -->
+      <div id="tab-register" style="display:none">
+        <div class="field">
+          <label>Display Name</label>
+          <input type="text" id="reg-name" placeholder="Your name (e.g. Asrorbek)" maxlength="30" onkeydown="if(event.key==='Enter')doRegister()">
+        </div>
+        <div class="field">
+          <label>Email Address</label>
+          <input type="email" id="reg-email" placeholder="you@example.com" onkeydown="if(event.key==='Enter')doRegister()">
+        </div>
+        <div class="field">
+          <label>Password</label>
+          <input type="password" id="reg-pass" placeholder="Minimum 6 characters" onkeydown="if(event.key==='Enter')doRegister()">
+        </div>
+        <button class="btn-primary" onclick="doRegister()">Create Account →</button>
+      </div>
+
+      <div class="auth-error" id="auth-err"></div>
+    </div>
+  </div>
+</div>
+
+<!-- ══ APP ══ -->
+<div id="app">
+  <div id="sidebar">
+    <div class="sb-header">
+      <div class="sb-logo">💬 NexTalk</div>
+      <div style="display:flex; gap:8px;">
+        <button class="btn-icon" title="Settings" onclick="openSettings()">⚙️</button>
+        <button class="btn-icon" title="New channel" onclick="createRoom()">✏️</button>
+      </div>
+    </div>
+    <div class="sb-search"><input id="room-search" placeholder="🔍  Search channels…" oninput="filterRooms()"></div>
+    <div class="rooms-label">Channels</div>
+    <div class="room-list" id="room-list"></div>
+    <div class="sb-footer">
+      <div class="sb-footer-row">
         <div class="sb-user">
-          <div class="user-avatar" id="sb-avatar">👤</div>
-          <div class="user-name" id="sb-name">—</div>
-          <button class="btn-logout" onclick="leaveApp()">🚪</button>
+          <div class="sb-user-avatar" id="user-avatar">U</div>
+          <div class="sb-user-name" id="user-name" title="Logged in as...">You</div>
+          <div class="sb-user-status" id="user-status"></div>
         </div>
-      </div>
-      <div id="main">
-        <div class="chat-header" id="chat-header" style="display:none;">
-          <div class="ch-avatar" id="ch-avatar">💬</div>
-          <div>
-            <div class="ch-name" id="ch-name">—</div>
-            <div class="ch-status" id="online-count">—</div>
-          </div>
-        </div>
-        <div class="chat-body" id="chat-body"></div>
-        <div class="chat-input-area">
-          <button class="emoji-btn" onclick="toggleEmoji()">😊</button>
-          <input id="msgInput" placeholder="Type a message…" onkeydown="handleKey(event)" oninput="autoResize(this);onTyping()" style="flex:1;padding:11px 16px;background:var(--panel);border:1px solid var(--border);border-radius:20px;color:var(--text);font-size:14px;outline:none;transition:.2s;font-family:inherit;resize:none;max-height:110px;">
-          <button class="send-btn" onclick="sendMsg()">➤</button>
-        </div>
-        <div class="emoji-picker" id="emoji-picker"></div>
+        <button class="btn-icon" title="Logout" onclick="doLogout()">🚪</button>
       </div>
     </div>
-  `;
-  document.body.innerHTML = authScreen + appScreen;
-  const emojiList = ['😀', '😂', '🤣', '😃', '😄', '😁', '😆', '😅', '🤭', '😉', '😌', '😍', '🥰', '😘', '😗', '😚', '😙', '🥲', '😋', '😛', '😜', '🤪', '😝'];
-  const picker = document.getElementById('emoji-picker');
-  emojiList.forEach(e => {
-    const span = document.createElement('span');
-    span.textContent = e;
-    span.onclick = () => insertEmoji(e);
-    picker.appendChild(span);
+  </div>
+
+  <div id="main">
+    <div id="welcome" style="display:flex;">
+      <div class="big">👋</div>
+      <h3>Select a channel to start messaging</h3>
+    </div>
+  </div>
+</div>
+
+<!-- ══ SETTINGS MODAL ══ -->
+<div class="modal" id="settings-modal">
+  <div class="modal-content">
+    <div class="modal-header">
+      <h2>Settings</h2>
+      <button class="modal-close" onclick="closeSettings()">×</button>
+    </div>
+    <div class="modal-body">
+      <div class="setting-section">
+        <h4>Notifications</h4>
+        <div style="display:flex;align-items:center;justify-content:space-between;">
+          <span style="font-size:14px;">Enable notifications</span>
+          <div class="toggle" id="notif-toggle" onclick="toggleNotif()"></div>
+        </div>
+      </div>
+
+      <div class="setting-section">
+        <h4>Language</h4>
+        <div class="lang-grid">
+          <div class="lang-pill" onclick="setLang('en')">🇬🇧 English</div>
+          <div class="lang-pill" onclick="setLang('uz')">🇺🇿 O'zbek</div>
+          <div class="lang-pill" onclick="setLang('ru')">🇷🇺 Русский</div>
+        </div>
+      </div>
+
+      <div class="setting-section">
+        <h4>Theme</h4>
+        <div class="theme-grid">
+          <div class="theme-swatch" style="background: linear-gradient(135deg, #0d1117, #161b22); border: 2px solid var(--accent);" onclick="setTheme('dark')">
+            <div class="check">✓</div>
+            <span class="theme-label">Dark</span>
+          </div>
+          <div class="theme-swatch" style="background: linear-gradient(135deg, #f6f8fa, #e1e4e8);" onclick="setTheme('light')">
+            <span class="theme-label" style="color: #333;">Light</span>
+          </div>
+          <div class="theme-swatch" style="background: linear-gradient(135deg, #1a4a6b, #2da8ff);" onclick="setTheme('ocean')">
+            <span class="theme-label">Ocean</span>
+          </div>
+          <div class="theme-swatch" style="background: linear-gradient(135deg, #2d1b4e, #7c6aff);" onclick="setTheme('purple')">
+            <span class="theme-label">Purple</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="setting-section">
+        <h4>Privacy</h4>
+        <div class="privacy-card">
+          <div class="privacy-icon">🔒</div>
+          <div class="privacy-text">
+            <h5>Encrypted Messages</h5>
+            <p>Your messages are encrypted end-to-end</p>
+          </div>
+        </div>
+        <div class="privacy-card">
+          <div class="privacy-icon">👁️</div>
+          <div class="privacy-text">
+            <h5>Online Status</h5>
+            <p>Others can see when you're online</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="setting-section">
+        <h4>Danger Zone</h4>
+        <div class="danger-card">
+          <div class="privacy-text">
+            <h5>Clear Chat History</h5>
+            <p>This action cannot be undone</p>
+          </div>
+          <button class="btn-primary" style="width: 140px;" onclick="clearHistory()">Clear All</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+  const socket = io();
+  let currentRoom = null;
+  let currentUser = null;
+  let rooms = [];
+
+  socket.on('connect', () => console.log('✓ Connected to server'));
+  socket.on('error', (err) => console.error('✗ Socket error:', err));
+  socket.on('user:register', (data) => {
+    currentUser = data.user;
+    showApp();
+    showToast(`Welcome, ${data.user.name}! 👋`);
+    console.log('Registered:', data);
   });
-});
-
-function toggleEmoji() {
-  document.getElementById('emoji-picker').classList.toggle('open');
-}
-
-function insertEmoji(e) {
-  const inp = document.getElementById('msgInput');
-  inp.value += e;
-  inp.focus();
-}
-
-function autoResize(el) {
-  el.style.height = 'auto';
-  el.style.height = Math.min(el.scrollHeight, 110) + 'px';
-}
-
-function handleKey(e) {
-  if (e.key === 'Enter' && !e.shiftKey) {
-    e.preventDefault();
-    sendMsg();
-  }
-}
-
-// Mobile interactivity
-(function () {
-  function closeSidebar() { document.body.classList.remove('sidebar-open'); }
-  document.querySelectorAll('.menu-toggle, .hamburger, [data-toggle="sidebar"]')
-    .forEach(btn => btn.addEventListener('click', () => {
-      document.body.classList.toggle('sidebar-open');
-    }));
-  document.addEventListener('click', (e) => {
-    if (document.body.classList.contains('sidebar-open')) {
-      const sidebar = document.querySelector('#sidebar');
-      if (sidebar && !sidebar.contains(e.target)) closeSidebar();
+  socket.on('user:login', (data) => {
+    currentUser = data.user;
+    rooms = data.rooms || [];
+    showApp();
+    showToast(`Welcome back, ${data.user.name}! 👋`);
+    renderRooms();
+    console.log('Logged in:', data);
+  });
+  socket.on('room:created', (room) => {
+    rooms.push(room);
+    renderRooms();
+    showToast(`Room "${room.name}" created! 🎉`);
+    console.log('Room created:', room);
+  });
+  socket.on('room:list', (list) => {
+    rooms = list;
+    renderRooms();
+  });
+  socket.on('room:join', (data) => {
+    currentRoom = data.room;
+    renderChat();
+    console.log('Joined room:', data);
+  });
+  socket.on('message:new', (msg) => {
+    if (currentRoom && msg.room === currentRoom.id) {
+      currentRoom.messages.push(msg);
+      renderChat();
     }
   });
-  document.querySelectorAll('.room-item')
-    .forEach(item => item.addEventListener('click', () => {
-      if (window.innerWidth <= 768) closeSidebar();
-    }));
-})();
+  socket.on('user:status', (data) => {
+    let room = rooms.find(r => r.id === data.room);
+    if (room) {
+      let u = room.members.find(m => m.id === data.user);
+      if (u) u.online = data.online;
+      renderChat();
+    }
+  });
+
+  function switchTab(tab) {
+    document.querySelectorAll('.auth-tab').forEach(t => t.classList.remove('active'));
+    document.getElementById('btn-tab-' + tab).classList.add('active');
+    document.querySelectorAll('#tab-login, #tab-register').forEach(t => t.style.display = 'none');
+    document.getElementById('tab-' + tab).style.display = 'block';
+    document.getElementById('auth-err').style.display = 'none';
+  }
+
+  function doLogin() {
+    const email = document.getElementById('login-email').value.trim();
+    const pass = document.getElementById('login-pass').value.trim();
+    const err = document.getElementById('auth-err');
+
+    if (!email || !pass) {
+      err.textContent = 'Please fill in all fields';
+      err.style.display = 'block';
+      return;
+    }
+
+    socket.emit('user:login', { email, password: pass }, (response) => {
+      if (response.success) {
+        console.log('Login success');
+      } else {
+        err.textContent = response.message || 'Login failed';
+        err.style.display = 'block';
+      }
+    });
+  }
+
+  function doRegister() {
+    const name = document.getElementById('reg-name').value.trim();
+    const email = document.getElementById('reg-email').value.trim();
+    const pass = document.getElementById('reg-pass').value.trim();
+    const err = document.getElementById('auth-err');
+
+    if (!name || !email || !pass) {
+      err.textContent = 'Please fill in all fields';
+      err.style.display = 'block';
+      return;
+    }
+
+    if (pass.length < 6) {
+      err.textContent = 'Password must be at least 6 characters';
+      err.style.display = 'block';
+      return;
+    }
+
+    socket.emit('user:register', { name, email, password: pass }, (response) => {
+      if (response.success) {
+        console.log('Register success');
+      } else {
+        err.textContent = response.message || 'Registration failed';
+        err.style.display = 'block';
+      }
+    });
+  }
+
+  function doLogout() {
+    if (confirm('Are you sure you want to logout?')) {
+      socket.emit('user:logout');
+      currentRoom = null;
+      currentUser = null;
+      rooms = [];
+      document.getElementById('auth-screen').style.display = 'flex';
+      document.getElementById('app').style.display = 'none';
+      document.getElementById('login-email').value = '';
+      document.getElementById('login-pass').value = '';
+      switchTab('login');
+    }
+  }
+
+  function showApp() {
+    document.getElementById('auth-screen').style.display = 'none';
+    document.getElementById('app').style.display = 'flex';
+    document.getElementById('user-name').textContent = currentUser.name || 'You';
+    document.getElementById('user-avatar').textContent = (currentUser.name || 'U').charAt(0).toUpperCase();
+  }
+
+  function createRoom() {
+    const name = prompt('Enter room name:');
+    if (name) socket.emit('room:create', { name });
+  }
+
+  function joinRoom(roomId) {
+    socket.emit('room:join', { roomId });
+  }
+
+  function sendMessage() {
+    const input = document.getElementById('msg-input');
+    const text = input.value.trim();
+
+    if (text && currentRoom) {
+      socket.emit('message:send', { room: currentRoom.id, text });
+      input.value = '';
+    }
+  }
+
+  function renderRooms() {
+    const list = document.getElementById('room-list');
+    list.innerHTML = rooms.map(room => `
+      <div class="room-item ${currentRoom && currentRoom.id === room.id ? 'active' : ''}" onclick="joinRoom('${room.id}')">
+        <div class="room-avatar">${room.name.charAt(0).toUpperCase()}</div>
+        <div class="room-info">
+          <div class="room-name">${room.name}</div>
+          <div class="room-preview">${room.messages && room.messages.length > 0 ? room.messages[room.messages.length - 1].text.slice(0, 40) : 'No messages yet'}</div>
+        </div>
+        <div class="room-time">${room.messages && room.messages.length > 0 ? new Date(room.messages[room.messages.length - 1].createdAt).toLocaleTimeString('en-US', {hour: '2-digit', minute:'2-digit'}) : ''}</div>
+      </div>
+    `).join('');
+  }
+
+  function renderChat() {
+    if (!currentRoom) return;
+
+    const main = document.getElementById('main');
+    const messages = currentRoom.messages || [];
+
+    main.innerHTML = `
+      <div class="msg-header">
+        <div class="room-info" style="flex:1;">
+          <div class="msg-header-avatar">${currentRoom.name.charAt(0).toUpperCase()}</div>
+          <div>
+            <h3>${currentRoom.name}</h3>
+            <p style="font-size:11px;color:var(--muted);"><span class="conn-dot"></span>${currentRoom.members ? currentRoom.members.filter(m => m.online).length : 0} online</p>
+          </div>
+        </div>
+      </div>
+      <div class="msg-list">
+        ${messages.map(msg => `
+          <div class="msg ${msg.user === currentUser.id ? 'own' : 'recv'}">
+            ${msg.user !== currentUser.id ? `<div class="msg-avatar">${(msg.userName || 'U').charAt(0).toUpperCase()}</div>` : ''}
+            <div>
+              <div class="msg-bubble">${msg.text}</div>
+              <div class="msg-time" style="opacity:0.6;font-size:11px;">${new Date(msg.createdAt).toLocaleTimeString('en-US', {hour: '2-digit', minute:'2-digit'})}</div>
+            </div>
+          </div>
+        `).join('')}
+      </div>
+      <div class="msg-footer">
+        <div class="msg-input-wrapper">
+          <input type="text" class="msg-input" id="msg-input" placeholder="Type your message…" onkeydown="if(event.key==='Enter')sendMessage()">
+          <button class="msg-btn" onclick="sendMessage()" title="Send">📤</button>
+        </div>
+      </div>
+    `;
+
+    setTimeout(() => {
+      const msgList = document.querySelector('.msg-list');
+      if (msgList) msgList.scrollTop = msgList.scrollHeight;
+    }, 10);
+  }
+
+  function openSettings() {
+    document.getElementById('settings-modal').classList.add('open');
+  }
+
+  function closeSettings() {
+    document.getElementById('settings-modal').classList.remove('open');
+  }
+
+  function toggleNotif() {
+    document.getElementById('notif-toggle').classList.toggle('on');
+  }
+
+  function setLang(lang) {
+    document.querySelectorAll('.lang-pill').forEach(p => p.classList.remove('selected'));
+    event.target.classList.add('selected');
+    console.log('Language set to:', lang);
+  }
+
+  function setTheme(theme) {
+    document.querySelectorAll('.theme-swatch').forEach(s => s.style.borderColor = 'transparent');
+    event.target.closest('.theme-swatch').style.borderColor = 'var(--accent)';
+    console.log('Theme set to:', theme);
+  }
+
+  function clearHistory() {
+    if (confirm('Clear all messages? This cannot be undone!')) {
+      if (currentRoom) {
+        currentRoom.messages = [];
+        renderChat();
+        showToast('Chat history cleared');
+      }
+    }
+  }
+
+  function filterRooms() {
+    const query = document.getElementById('room-search').value.toLowerCase();
+    document.querySelectorAll('.room-item').forEach(item => {
+      const name = item.querySelector('.room-name').textContent.toLowerCase();
+      item.style.display = name.includes(query) ? 'flex' : 'none';
+    });
+  }
+
+  function showToast(msg) {
+    const toast = document.getElementById('toast');
+    toast.textContent = msg;
+    toast.classList.add('show');
+    setTimeout(() => toast.classList.remove('show'), 3000);
+  }
+
+  window.addEventListener('load', () => {
+    console.log('App loaded');
+    renderRooms();
+  });
 </script>
 </body>
 </html>
